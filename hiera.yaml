@@ -1,0 +1,8 @@
+---
+:backends:
+  - yaml
+:yaml:
+  :datadir: /opt/garage/hieradata
+:hierarchy:
+  - "%{::init_role}"
+  - common

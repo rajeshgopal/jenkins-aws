@@ -1,0 +1,26 @@
+---
+jenkins::version: ''
+jenkins::plugin_hash:
+  credentials: {}
+  swarm: {}
+  docker-commons: {}
+  docker-plugin: {}
+  docker-workflow: {}
+  gitlab-plugin: {}
+  git: {}
+  git-parameter: {}
+  ant: {}
+  artifactory: {}
+  cloudbees-folder: {}
+  junit: {}
+  maven-plugin: {}
+  packer: {}
+  pipeline-aws: {}
+  pipeline-build-step: {}
+  pipeline-github: {}
+  pipeline-input-step: {}
+  pipeline-stage-step: {}
+  thinBackup: {}
+jenkins::master::swarm_version: ''
+  
+  

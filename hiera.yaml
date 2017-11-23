@@ -4,4 +4,6 @@
 :yaml:
   :datadir: /opt/garage/hieradata
 :hierarchy:
+  - master
+  - slave
   - common

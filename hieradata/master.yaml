@@ -1,26 +1,53 @@
 ---
-jenkins::version: ''
+jenkins::version: '2.73.3'
 jenkins::plugin_hash:
+  ace-editor: {}
+  ant: {}
+  artifactory: {}
+  antisamy-markup-formatter: {}
+  authentication-tokens: {}
+  bouncycastle-api: {}
   credentials: {}
-  swarm: {}
+  credentials-binding: {}
+  cloudbees-folder: {}
   docker-commons: {}
   docker-plugin: {}
+  docker-java-api: {}
+  docker-build-step: {}
   docker-workflow: {}
+  durable-task: {}
   gitlab-plugin: {}
   git: {}
   git-parameter: {}
-  ant: {}
-  artifactory: {}
-  cloudbees-folder: {}
   junit: {}
+  jquery-detached: {}
   maven-plugin: {}
+  matrix-plugin: {}
+  matrix-auth: {}
   packer: {}
   pipeline-aws: {}
   pipeline-build-step: {}
   pipeline-github: {}
   pipeline-input-step: {}
   pipeline-stage-step: {}
+  plain-credentials: {}
+  scm-api: {}
+  structs: {}
+  swarm: {}
+  script-security: {}
+  ssh-credentials: {}
+  ssh-slaves: {}
+  support-core: {}
+  token-macro: {}
   thinBackup: {}
-jenkins::master::swarm_version: ''
-  
+  windows-slaves: {}
+  workflow-api: {}
+  workflow-job: {}
+  workflow-cps: {}
+  workflow-durable-task-step: {}
+  workflow-step-api: {}
+  workflow-scm-step: {}
+  workflow-support: {}
+
+ 
   

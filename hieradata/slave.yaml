@@ -1,7 +1,7 @@
 ---
-jenkins::slave::masterurl: ${masterurl}
+jenkins::slave::masterurl: "${masterurl}"
 jenkins::slave::executors: 20
-jenkins::slave::version: '3.2'
+jenkins::slave::version: '3.6'
 jenkins::slave::ui_user: 
 jenkins::slave::ui_pass:
 

@@ -1,5 +1,6 @@
 ---
 jenkins::version: '2.73.3'
+jenkins::cli: false
 jenkins::plugin_hash:
   ace-editor: {}
   ant: {}
@@ -11,6 +12,7 @@ jenkins::plugin_hash:
   bouncycastle-api: {}
   credentials-binding: {}
   cloudbees-folder: {}
+  display-url-api: {}
   docker-commons: {}
   docker-plugin: {}
   docker-java-api: {}
@@ -20,6 +22,7 @@ jenkins::plugin_hash:
   gitlab-plugin: {}
   git: {}
   git-client: {}
+  github: {}
   git-parameter: {}
   github-branch-source: {}
   jackson2-api: {}

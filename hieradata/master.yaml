@@ -12,6 +12,7 @@ jenkins::plugin_hash:
   bouncycastle-api: {}
   credentials-binding: {}
   cloudbees-folder: {}
+  config-file-provider: {}
   display-url-api: {}
   docker-commons: {}
   docker-plugin: {}
@@ -23,12 +24,16 @@ jenkins::plugin_hash:
   git: {}
   git-client: {}
   github: {}
+  github-api: {}
   git-parameter: {}
   github-branch-source: {}
+  gradle: {}
+  ivy: {}
   jackson2-api: {}
   javadoc: {}
   jsch: {}
   junit: {}
+  jquery: {}
   jquery-detached: {}
   mailer: {}
   maven-plugin: {}
@@ -43,7 +48,6 @@ jenkins::plugin_hash:
   pipeline-stage-step: {}
   plain-credentials: {}
   scm-api: {}
-  structs: {}
   swarm: {}
   script-security: {}
   ssh-credentials: {}
@@ -59,6 +63,3 @@ jenkins::plugin_hash:
   workflow-step-api: {}
   workflow-scm-step: {}
   workflow-support: {}
-
- 
-  

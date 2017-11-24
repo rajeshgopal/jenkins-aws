@@ -1,9 +1,11 @@
 require 'puppet/util/warnings'
 
-require 'puppet_x/jenkins/util'
-require 'puppet_x/jenkins/provider/cli'
+require 'json'
 
-Puppet::Type.type(:jenkins_job).provide(:cli, :parent => PuppetX::Jenkins::Provider::Cli) do
+require File.join(File.dirname(__FILE__), '../../..', 'puppet/x/jenkins/util')
+require File.join(File.dirname(__FILE__), '../../..', 'puppet/x/jenkins/provider/cli')
+
+Puppet::Type.type(:jenkins_job).provide(:cli, :parent => Puppet::X::Jenkins::Provider::Cli) do
 
   mk_resource_methods
 
@@ -24,8 +26,7 @@ Puppet::Type.type(:jenkins_job).provide(:cli, :parent => PuppetX::Jenkins::Provi
 
   # ignore #create so we can differentiate in #flush between an update to an
   # existing job and creating a new one
-  def create
-  end
+  def create; end
 
   def flush
     update = false

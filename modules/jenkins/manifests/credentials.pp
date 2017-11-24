@@ -17,30 +17,22 @@
 # Jenkins credentials (via the CloudBees Credentials plugin
 #
 define jenkins::credentials (
-  $password,
-  $description = 'Managed by Puppet',
-  $private_key_or_path = '',
-  $ensure = 'present',
-  $uuid = '',
+  String $password,
+  String $description               = 'Managed by Puppet',
+  String $private_key_or_path       = '',
+  Enum['present', 'absent'] $ensure = 'present',
+  String $uuid                      = '',
 ){
-  validate_string($password)
-  validate_string($description)
-  validate_string($private_key_or_path)
-  validate_re($ensure, '^present$|^absent$')
-  validate_string($uuid)
 
+  include ::jenkins
   include ::jenkins::cli_helper
 
-  Class['jenkins::cli_helper'] ->
-    Jenkins::Credentials[$title] ->
-      Anchor['jenkins::end']
+  Class['jenkins::cli_helper']
+    -> Jenkins::Credentials[$title]
+      -> Anchor['jenkins::end']
 
   case $ensure {
     'present': {
-      validate_string($password)
-      validate_string($description)
-      validate_string($private_key_or_path)
-      validate_string($uuid)
       jenkins::cli::exec { "create-jenkins-credentials-${title}":
         command => [
           'create_or_update_credentials',
@@ -50,7 +42,7 @@ define jenkins::credentials (
           "'${description}'",
           "'${private_key_or_path}'",
         ],
-        unless  => "\$HELPER_CMD credential_info ${title} | grep ${title}",
+        unless  => "for i in \$(seq 1 ${::jenkins::cli_tries}); do \$HELPER_CMD credential_info ${title} && break || sleep ${::jenkins::cli_try_sleep}; done | grep ${title}", # lint:ignore:140chars
       }
     }
     'absent': {

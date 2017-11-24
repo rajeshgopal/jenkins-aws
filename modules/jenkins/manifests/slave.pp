@@ -12,7 +12,8 @@
 #   Specify the name of the slave.  Not required, by default it will use the fqdn.
 #
 # [*masterurl*]
-#   Specify the URL of the master server.  Not required, the plugin will do a UDP autodiscovery. If specified, the autodiscovery will be skipped.
+#   Specify the URL of the master server.  Not required, the plugin will do a UDP autodiscovery. If specified, the autodiscovery will
+#   be skipped.
 #
 # [*autodiscoveryaddress*]
 #   Use this addresss for udp-based auto-discovery (default: 255.255.255.255)
@@ -33,6 +34,9 @@
 # [*slave_user*]
 #   Defaults to 'jenkins-slave'. Change it if you'd like..
 #
+# [*slave_groups*]
+#   Not required.  Use to add the slave_user to other groups if you need to.  Defaults to undef.
+#
 # [*slave_uid*]
 #   Not required.  Puppet will let your system add the user, with the new UID if necessary.
 #
@@ -40,19 +44,23 @@
 #   Defaults to '/home/jenkins-slave'.  This is where the code will be installed, and the workspace will end up.
 #
 # [*slave_mode*]
-#   Defaults to 'normal'. Can be either 'normal' (utilize this slave as much as possible) or 'exclusive' (leave this machine for tied jobs only).
+#   Defaults to 'normal'. Can be either 'normal' (utilize this slave as much as possible) or 'exclusive'
+#   (leave this machine for tied jobs only).
 #
 # [*disable_ssl_verification*]
-#   Disable SSL certificate verification on Swarm clients. Not required, but is necessary if you're using a self-signed SSL cert. Defaults to false.
+#   Disable SSL certificate verification on Swarm clients. Not required, but is necessary if you're using a self-signed SSL cert.
+#   Defaults to false.
+#
+# [*disable_clients_unique_id*]
+#   Disable setting the unique id for the swarm client
+#   Defaults to false
 #
 # [*labels*]
 #   Not required.  String, or Array, that contains the list of labels to be assigned for this slave.
 #
 # [*tool_locations*]
-#   Not required.  Single string of whitespace-separated list of tool locations to be defined on this slave. A tool location is specified as 'toolName:location'.
-#
-# [*java_version*]
-#   Specified which version of java will be used.
+#   Not required.  Single string of whitespace-separated list of tool locations to be defined on this slave. A tool location is specified
+#   as 'toolName:location'.
 #
 # [*description*]
 #   Not required.  Description which will appear on the jenkins master UI.
@@ -79,6 +87,9 @@
 #   parameter so the `::jenkins` class does not need to be the catalog for
 #   slave only nodes.
 #
+# [*swarm_client_args*]
+#   Swarm client arguments to add to slave command line. More info: https://github.com/jenkinsci/swarm-plugin/blob/master/client/src/main/java/hudson/plugins/swarm/Options.java
+#
 
 # === Examples
 #
@@ -96,53 +107,41 @@
 #
 # Copyright 2013 Matthew Barr , but can be used for anything by anyone..
 class jenkins::slave (
-  $slave_name               = undef,
-  $description              = undef,
-  $masterurl                = undef,
-  $autodiscoveryaddress     = undef,
-  $ui_user                  = undef,
-  $ui_pass                  = undef,
-  $version                  = $jenkins::params::swarm_version,
-  $executors                = 2,
-  $manage_slave_user        = true,
-  $slave_user               = 'jenkins-slave',
-  $slave_uid                = undef,
-  $slave_home               = '/home/jenkins-slave',
-  $slave_mode               = 'normal',
-  $disable_ssl_verification = false,
-  $labels                   = undef,
-  $tool_locations           = undef,
-  $install_java             = $jenkins::params::install_java,
-  $manage_client_jar        = true,
-  $ensure                   = 'running',
-  $enable                   = true,
-  $source                   = undef,
-  $java_args                = undef,
-  $proxy_server             = undef,
+  Optional[String] $slave_name            = undef,
+  Optional[String] $description           = undef,
+  Optional[String] $masterurl             = undef,
+  Optional[String] $autodiscoveryaddress  = undef,
+  Optional[String] $ui_user               = undef,
+  Optional[String] $ui_pass               = undef,
+  Optional[String] $tool_locations        = undef,
+  Optional[String] $source                = undef,
+  Optional[String] $proxy_server          = undef,
+  String $version                         = $jenkins::params::swarm_version,
+  Integer $executors                      = 2,
+  Boolean $manage_slave_user              = true,
+  String $slave_user                      = 'jenkins-slave',
+  Optional[String] $slave_groups          = undef,
+  Optional[Integer] $slave_uid            = undef,
+  Stdlib::Absolutepath $slave_home        = '/home/jenkins-slave',
+  Enum['normal', 'exclusive'] $slave_mode = 'normal',
+  Boolean $disable_ssl_verification       = false,
+  Boolean $disable_clients_unique_id      = false,
+  Any $labels                             = undef,
+  Any $install_java                       = $jenkins::params::install_java,
+  Boolean $manage_client_jar              = true,
+  Enum['running', 'stopped'] $ensure      = 'running',
+  Boolean $enable                         = true,
+  Any $java_args                          = undef,
+  Any $swarm_client_args                  = undef,
+  Boolean $delete_existing_clients        = false,
 ) inherits jenkins::params {
-  validate_string($slave_name)
-  validate_string($description)
-  validate_string($masterurl)
-  validate_string($autodiscoveryaddress)
-  validate_string($ui_user)
-  validate_string($ui_pass)
-  validate_string($version)
-  validate_integer($executors)
-  validate_bool($manage_slave_user)
-  validate_string($slave_user)
-  if $slave_uid { validate_integer($slave_uid) }
-  validate_absolute_path($slave_home)
-  validate_re($slave_mode, '^normal$|^exclusive$')
-  validate_bool($disable_ssl_verification)
-  validate_string($tool_locations)
-  validate_bool($install_java)
-  validate_bool($manage_client_jar)
-  validate_re($ensure, '^running$|^stopped$')
-  validate_bool($enable)
-  validate_string($source)
-  validate_string($proxy_server)
 
-  $client_jar = "swarm-client-${version}-jar-with-dependencies.jar"
+  if versioncmp($version, '3.0') < 0 {
+    $client_jar = "swarm-client-${version}-jar-with-dependencies.jar"
+  } else {
+    $client_jar = "swarm-client-${version}.jar"
+  }
+
   $client_url = $source ? {
     undef   => "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${version}/",
     default => $source,
@@ -170,6 +169,24 @@ class jenkins::slave (
     }
   }
 
+  if $swarm_client_args {
+    if is_array($swarm_client_args) {
+      $_combined_swarm_client_args = hiera_array('jenkins::slave::swarm_client_args', $swarm_client_args)
+      $_real_swarm_client_args = join($_combined_swarm_client_args, ' ')
+    }
+    else {
+      $_real_swarm_client_args = $swarm_client_args
+    }
+  }
+
+  # the "public" API for tool_locations is a space seperated string in the
+  # format "<name>:<path> [<name>:<path> ...]"
+  # XXX a hash would be a more reasonable interface
+  $_real_tool_locations = $tool_locations ? {
+    undef   => undef,
+    default => regsubst($tool_locations, ':', '=', 'G'),
+  }
+
   if $install_java and ($::osfamily != 'Darwin') {
     # Currently the puppetlabs/java module doesn't support installing Java on
     # Darwin
@@ -180,7 +197,7 @@ class jenkins::slave (
   # customizations based on the OS family
   case $::osfamily {
     'Debian': {
-      $defaults_location = '/etc/default'
+      $defaults_location = $::jenkins::params::sysconfdir
 
       ensure_packages(['daemon'])
       Package['daemon'] -> Service['jenkins-slave']
@@ -189,24 +206,39 @@ class jenkins::slave (
       $defaults_location = $slave_home
     }
     default: {
-      $defaults_location = '/etc/sysconfig'
+      $defaults_location = $::jenkins::params::sysconfdir
     }
   }
 
   case $::kernel {
     'Linux': {
-      $service_name   = 'jenkins-slave'
-      $defaults_user  = 'root'
-      $defaults_group = 'root'
+      $service_name     = 'jenkins-slave'
+      $defaults_user    = 'root'
+      $defaults_group   = 'root'
       $manage_user_home = true
+      $sysv_init        = '/etc/init.d/jenkins-slave'
 
-      file { '/etc/init.d/jenkins-slave':
-        ensure => 'file',
-        mode   => '0755',
-        owner  => 'root',
-        group  => 'root',
-        source => "puppet:///modules/${module_name}/jenkins-slave.${::osfamily}",
-        notify => Service['jenkins-slave'],
+      if $::systemd {
+        jenkins::systemd { 'jenkins-slave':
+          user   => $slave_user,
+          libdir => $slave_home,
+        }
+      } else {
+        file { "${slave_home}/${service_name}-run":
+          content => template("${module_name}/${service_name}-run.erb"),
+          owner   => $slave_user,
+          mode    => '0755',
+          notify  => Service[$service_name],
+        }
+
+        file { $sysv_init:
+          ensure  => 'file',
+          mode    => '0755',
+          owner   => 'root',
+          group   => 'root',
+          content => template("${module_name}/${service_name}.${::osfamily}.erb"),
+          notify  => Service[$service_name],
+        }
       }
     }
     'Darwin': {
@@ -229,14 +261,14 @@ class jenkins::slave (
         mode    => '0644',
         owner   => 'root',
         group   => 'wheel',
-      } ->
-      Service['jenkins-slave']
+      }
+      -> Service['jenkins-slave']
 
       file { '/var/log/jenkins':
         ensure => 'directory',
         owner  => $slave_user,
-      } ->
-      Service['jenkins-slave']
+      }
+      -> Service['jenkins-slave']
 
       if $manage_slave_user {
         # osx doesn't have managehome support, so create directory
@@ -261,6 +293,7 @@ class jenkins::slave (
       managehome => $manage_user_home,
       system     => true,
       uid        => $slave_uid,
+      groups     => $slave_groups,
     }
   }
 
@@ -280,8 +313,8 @@ class jenkins::slave (
       proxy_server => $proxy_server,
       cleanup      => false,
       extract      => false,
-    } ->
-    Service['jenkins-slave']
+    }
+    -> Service['jenkins-slave']
   }
 
   service { 'jenkins-slave':
@@ -293,7 +326,7 @@ class jenkins::slave (
   }
 
   if $manage_slave_user and $manage_client_jar {
-    User['jenkins-slave_user']->
-      Archive['get_swarm_client']
+    User['jenkins-slave_user']
+      -> Archive['get_swarm_client']
   }
 }

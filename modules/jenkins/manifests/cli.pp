@@ -18,37 +18,41 @@ class jenkins::cli {
   #
   # As an attempt to preserve backwards compatibility, there are includes and
   # resource relationships being scattered throughout this module.
-  Class['jenkins::service'] ->
-    Class['jenkins::cli'] ->
-      Anchor['jenkins::end']
+  if $::jenkins::manage_service {
+    Class['jenkins::service']
+      -> Class['jenkins::cli']
+        -> Anchor['jenkins::end']
+  }
 
   $jar = "${jenkins::libdir}/jenkins-cli.jar"
   $extract_jar = "jar -xf ${jenkins::libdir}/jenkins.war WEB-INF/jenkins-cli.jar"
   $move_jar = "mv WEB-INF/jenkins-cli.jar ${jar}"
   $remove_dir = 'rm -rf WEB-INF'
 
-  exec { 'jenkins-cli' :
-    command => "${extract_jar} && ${move_jar} && ${remove_dir}",
-    path    => ['/bin', '/usr/bin'],
-    cwd     => '/tmp',
+  # make sure we always call Exec[jenlins-cli] in case
+  # the binary does not exist
+  exec { 'check-jenkins-cli':
+    command => '/bin/true',
     creates => $jar,
-    require => Service['jenkins'],
   }
+  ~> exec { 'jenkins-cli' :
+    command     => "${extract_jar} && ${move_jar} && ${remove_dir}",
+    path        => ['/bin', '/usr/bin'],
+    cwd         => '/tmp',
+    refreshonly => true,
+    require     => Service['jenkins'],
+  }
+  # Extract latest CLI in case package is updated / downgraded
+  Package[$::jenkins::package_name] ~> Exec['jenkins-cli']
 
   file { $jar:
     ensure  => file,
+    mode    => '0644',
     require => Exec['jenkins-cli'],
   }
 
   $port = jenkins_port()
   $prefix = jenkins_prefix()
-
-  # Provide the -i flag if specified by the user.
-  if $::jenkins::cli_ssh_keyfile {
-    $auth_arg = "-i ${::jenkins::cli_ssh_keyfile}"
-  } else {
-    $auth_arg = undef
-  }
 
   # The jenkins cli command with required parameter(s)
   $cmd = join(
@@ -56,7 +60,7 @@ class jenkins::cli {
       'java',
       "-jar ${::jenkins::cli::jar}",
       "-s http://localhost:${port}${prefix}",
-      $auth_arg,
+      $::jenkins::_cli_auth_arg,
     ]),
     ' '
   )

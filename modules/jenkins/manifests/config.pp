@@ -6,7 +6,7 @@ class jenkins::config {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  ensure_resource('jenkins::plugin', $::jenkins::params::default_plugins)
+  ensure_resource('jenkins::plugin', $::jenkins::default_plugins)
 
   $config_hash = merge(
     $::jenkins::params::config_hash_defaults,
@@ -41,9 +41,19 @@ class jenkins::config {
     })
   }
 
+  $plugin_dir_params = $::jenkins::purge_plugins ? {
+    true    => merge($dir_params, {
+      purge   => true,
+      recurse => true,
+      force   => true,
+      notify  => Service['jenkins'],
+    }),
+    default => $dir_params,
+  }
+
   if $::jenkins::manage_datadirs {
     ensure_resource('file', $::jenkins::localstatedir, $dir_params)
-    ensure_resource('file', $::jenkins::plugin_dir, $dir_params)
+    ensure_resource('file', $::jenkins::plugin_dir, $plugin_dir_params)
     ensure_resource('file', $::jenkins::job_dir, $dir_params)
   }
 }

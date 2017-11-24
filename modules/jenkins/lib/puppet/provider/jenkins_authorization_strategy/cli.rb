@@ -1,7 +1,9 @@
-require 'puppet_x/jenkins/util'
-require 'puppet_x/jenkins/provider/cli'
+require File.join(File.dirname(__FILE__), '../../..', 'puppet/x/jenkins/util')
+require File.join(File.dirname(__FILE__), '../../..', 'puppet/x/jenkins/provider/cli')
 
-Puppet::Type.type(:jenkins_authorization_strategy).provide(:cli, :parent => PuppetX::Jenkins::Provider::Cli) do
+require 'json'
+
+Puppet::Type.type(:jenkins_authorization_strategy).provide(:cli, :parent => Puppet::X::Jenkins::Provider::Cli) do
 
   mk_resource_methods
 
@@ -43,7 +45,7 @@ Puppet::Type.type(:jenkins_authorization_strategy).provide(:cli, :parent => Pupp
     }
 
     # map nil -> :undef
-    args = PuppetX::Jenkins::Util.undefize(args)
+    args = Puppet::X::Jenkins::Util.undefize(args)
     new(args)
   end
   private_class_method :from_hash
@@ -60,7 +62,7 @@ Puppet::Type.type(:jenkins_authorization_strategy).provide(:cli, :parent => Pupp
 
     info = { 'setAuthorizationStrategy' => ctor }
     # map :undef -> nil
-    PuppetX::Jenkins::Util.unundef(info)
+    Puppet::X::Jenkins::Util.unundef(info)
   end
 
   # jenkins only supports a single configured security realm at a time

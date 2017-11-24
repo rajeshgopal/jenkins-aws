@@ -6,5 +6,10 @@ jenkins::slave::ui_user:
 jenkins::slave::ui_pass:
 
 packageslist:
+  - ant
+  - maven
+  - mysql
+  - npm
+  
 piplist:
 gemlist:

@@ -5,7 +5,9 @@ jenkins::plugin_hash:
   ant: {}
   artifactory: {}
   antisamy-markup-formatter: {}
+  apache-httpcomponents-client-4-api: {}
   authentication-tokens: {}
+  aws-java-sdk: {}
   bouncycastle-api: {}
   credentials-binding: {}
   cloudbees-folder: {}
@@ -17,11 +19,19 @@ jenkins::plugin_hash:
   durable-task: {}
   gitlab-plugin: {}
   git: {}
+  git-client: {}
   git-parameter: {}
+  github-branch-source: {}
+  jackson2-api: {}
+  javadoc: {}
+  jsch: {}
   junit: {}
   jquery-detached: {}
+  mailer: {}
   maven-plugin: {}
+  matrix-project: {}
   matrix-auth: {}
+  metrics: {}
   packer: {}
   pipeline-aws: {}
   pipeline-build-step: {}

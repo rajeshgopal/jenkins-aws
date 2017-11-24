@@ -7,7 +7,6 @@ jenkins::plugin_hash:
   antisamy-markup-formatter: {}
   authentication-tokens: {}
   bouncycastle-api: {}
-  credentials: {}
   credentials-binding: {}
   cloudbees-folder: {}
   docker-commons: {}
@@ -22,7 +21,6 @@ jenkins::plugin_hash:
   junit: {}
   jquery-detached: {}
   maven-plugin: {}
-  matrix-plugin: {}
   matrix-auth: {}
   packer: {}
   pipeline-aws: {}

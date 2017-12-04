@@ -1,6 +1,8 @@
 ---
 jenkins::version: '2.73.3'
-jenkins::cli: false
+jenkins::cli: true
+jenkins::slaveagentport: 40443
+jenkins::executors: 0
 jenkins::plugin_hash:
   ace-editor: {}
   ant: {}

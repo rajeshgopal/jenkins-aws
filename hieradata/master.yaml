@@ -3,7 +3,7 @@ jenkins::version: '2.73.3'
 jenkins::cli: true
 jenkins::slaveagentport: 40443
 jenkins::executors: 0
-jenkins::security::security_model: 'unsecured'
+jenkins::security::security_model: 'full_control'
 jenkins::user_hash:
   admin:
     password: 'flamingo1!'

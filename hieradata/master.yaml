@@ -1,10 +1,29 @@
 ---
 jenkins::version: "%{::jenkinsversion}"
 jenkins::lts: false
-jenkins::cli: true
+jenkins::cli: false
 #jenkins::slaveagentport: "%{::slaveport}"
-jenkins::executors: 0
-jenkins::security::security_model: 'full_control'
+#jenkins::executors: 0
+#jenkins::security::security_model: 'full_control'
+
+## this is used by custom groovy scripts to configure jenkins
+customscript:
+  - script: add_user
+    data:
+      - user: admin
+        passwd: romeo
+      - user: slaveuser
+        passwd: bingo  
+  - script: set_executors
+    data:
+      count: 0
+  - script: set_slaveport
+    data:
+      slaveport: "%{::slaveport}"
+  - script: set_security
+    data:
+      model: fullcontrol
+    
 jenkins::plugin_hash:
   ace-editor: {}
   ant: {}

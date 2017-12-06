@@ -1,4 +1,6 @@
 #install jenkins as master
 
-include jenkins
+class { 'jenkins':
+  slaveagentport => 0 + $::slaveport,
+  }
 include jenkins::security

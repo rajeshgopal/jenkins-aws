@@ -13,5 +13,5 @@ import org.apache.commons.io.IOUtils
 import org.jenkinsci.plugins.*
 
 def j = Jenkins.getInstance()
-    j.setNumExecutors((<%= @input[data][count] %>).toInteger)
+    j.setNumExecutors(<%= @input['count'] %>)
     j.save()

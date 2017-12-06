@@ -2,7 +2,6 @@
 jenkins::version: "%{::jenkinsversion}"
 jenkins::lts: false
 jenkins::cli: true
-jenkins::cli_remoting_free: false
 #jenkins::slaveagentport: "%{::slaveport}"
 jenkins::executors: 0
 jenkins::security::security_model: 'full_control'

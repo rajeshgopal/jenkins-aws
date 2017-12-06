@@ -1,5 +1,6 @@
 ---
 jenkins::version: "%{::jenkinsversion}"
+jenkins::lts: false
 jenkins::cli: true
 jenkins::slaveagentport: 40443
 jenkins::executors: 0

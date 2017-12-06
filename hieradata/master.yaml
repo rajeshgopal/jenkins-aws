@@ -11,7 +11,7 @@ customscript:
   - script: add_user
     data:
       - user: admin
-        passwd: romeo
+        passwd: "%{::masterpwd}"
       - user: slaveuser
         passwd: bingo  
   - script: set_executors

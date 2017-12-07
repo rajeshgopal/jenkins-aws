@@ -39,11 +39,6 @@ jenkins::plugin_hash:
   cloudbees-folder: {}
   config-file-provider: {}
   display-url-api: {}
-  docker-commons: {}
-  docker-plugin: {}
-  docker-java-api: {}
-  docker-build-step: {}
-  docker-workflow: {}
   durable-task: {}
   gitlab-plugin: {}
   git: {}
@@ -66,11 +61,6 @@ jenkins::plugin_hash:
   matrix-auth: {}
   metrics: {}
   packer: {}
-  pipeline-aws: {}
-  pipeline-build-step: {}
-  pipeline-github: {}
-  pipeline-input-step: {}
-  pipeline-stage-step: {}
   plain-credentials: {}
   scm-api: {}
   swarm: {}
@@ -80,3 +70,4 @@ jenkins::plugin_hash:
   support-core: {}
   token-macro: {}
   thinBackup: {}
+  

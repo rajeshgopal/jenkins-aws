@@ -35,6 +35,7 @@ jenkins::plugin_hash1:
   aws-java-sdk: {}
   bouncycastle-api: {}
   credentials-binding: {}
+  command-launcher: {}
   cloudbees-folder: {}
   config-file-provider: {}
   display-url-api: {}
@@ -79,11 +80,3 @@ jenkins::plugin_hash1:
   support-core: {}
   token-macro: {}
   thinBackup: {}
-  windows-slaves: {}
-  workflow-api: {}
-  workflow-job: {}
-  workflow-cps: {}
-  workflow-durable-task-step: {}
-  workflow-step-api: {}
-  workflow-scm-step: {}
-  workflow-support: {}

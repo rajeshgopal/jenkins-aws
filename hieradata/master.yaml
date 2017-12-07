@@ -13,8 +13,8 @@ customscript:
     data:
       - user: admin
         passwd: "%{::masterpwd}"
-      - user: slaveuser
-        passwd: bingo  
+      - user: "%{::slaveuser}"
+        passwd: "%{::slavepwd}"
   - script: set_executors
     data:
       count: 0

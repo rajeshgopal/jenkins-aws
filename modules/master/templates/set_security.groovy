@@ -12,8 +12,16 @@ import jenkins.security.*
 import org.apache.commons.io.IOUtils
 import org.jenkinsci.plugins.*
 
+class InvalidAuthenticationStrategy extends Exception{}
+@InheritConstructors
+class UnsupportedCredentialsClass extends Exception {}
+@InheritConstructors
+class InvalidCredentialsId extends Exception {}
+@InheritConstructors
+class MissingRequiredPlugin extends Exception {}
+
 def j = Jenkins.getInstance()
-def security_model = "<%= @input['model'] %>"
+def security_model = '<%= @input['model'] %>'
     if (security_model == 'disabled') {
       j.disableSecurity()
       return null

@@ -18,6 +18,7 @@ $scriptdata.each |$item| {
   exec { "$script":
     path      => ['/usr/bin','usr/local/bin','/bin'],
     command   => "curl -d \"script=\$(cat /tmp/$script.groovy)\"  http://localhost:8080/scriptText",
-    logoutput => true
+    logoutput => true,
+    require   => Service['jenkins']
    }
 }

@@ -25,7 +25,7 @@ customscript:
     data:
       model: fullcontrol
     
-jenkins::plugin_hash1:
+jenkins::plugin_hash:
   ace-editor: {}
   ant: {}
   artifactory: {}

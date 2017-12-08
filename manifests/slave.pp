@@ -2,7 +2,7 @@
 
 include jenkins::slave
 
-$list = hiera('packageslist')
+$list = lookup('packageslist')
 package { "$list":
   ensure => installed,
   }

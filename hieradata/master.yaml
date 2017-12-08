@@ -31,8 +31,8 @@ jenkins::plugin_hash1:
   artifactory: {}
   antisamy-markup-formatter: {}
   apache-httpcomponents-client-4-api: {}
+  async-http-client: {}
   authentication-tokens: {}
-  aws-java-sdk: {}
   bouncycastle-api: {}
   credentials-binding: {}
   command-launcher: {}
@@ -57,10 +57,11 @@ jenkins::plugin_hash1:
   jquery-detached: {}
   mailer: {}
   maven-plugin: {}
+  maven-info: {}
+  maven-metadata-plugin: {}
   matrix-project: {}
   matrix-auth: {}
   metrics: {}
-  packer: {}
   plain-credentials: {}
   scm-api: {}
   swarm: {}
@@ -70,4 +71,11 @@ jenkins::plugin_hash1:
   support-core: {}
   token-macro: {}
   thinBackup: {}
-  
+  windows-slaves: {}
+  workflow-api: {}
+  workflow-job: {}
+  workflow-cps: {}
+  workflow-durable-task-step: {}
+  workflow-step-api: {}
+  workflow-scm-step: {}
+  workflow-support: {}

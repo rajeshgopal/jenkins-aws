@@ -31,7 +31,9 @@ class master(
    package { 'wget':
      ensure => installed,
    }
-
+   
+   Package['wget'] -> Exec <||>
+   
    $settings.each |$key, $item| {
 
      $input = $item[data]

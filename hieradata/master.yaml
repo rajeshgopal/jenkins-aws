@@ -8,23 +8,27 @@ jenkins:cli_remoting_free: false
 #jenkins::security::security_model: 'full_control'
 
 ## this is used by custom groovy scripts to configure jenkins
-customscript:
-  - script: add_user
+## this is used by custom groovy scripts to configure jenkins
+master::settings:
+  user:
+    script: add_user
     data:
       - user: admin
         passwd: "%{::masterpwd}"
       - user: "%{::slaveuser}"
         passwd: "%{::slavepwd}"
-  - script: set_executors
+  executor:
+    script: set_executors
     data:
       count: 0
-  - script: set_slaveport
+  agent:
+    script: set_slaveport
     data:
       slaveport: "%{::slaveport}"
-  - script: set_security
+  security:
+    script: set_security
     data:
-      model: fullcontrol
-    
+      model: fullcontrol    
 jenkins::plugin_hash:
   ace-editor:
     version: '1.1'

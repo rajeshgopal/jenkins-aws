@@ -3,7 +3,9 @@
 include jenkins::slave
 
 $list = lookup('packageslist')
-package { "$list":
-  ensure => installed,
+$list.each |$item| {
+  package { "$item":
+    ensure => installed,
   }
+}
 

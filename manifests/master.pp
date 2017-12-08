@@ -28,6 +28,7 @@ $scriptdata.each |$item| {
     logoutput => true,
     onlyif    => "/usr/bin/wget --spider --tries 30 --retry-connrefused http://localhost:8080/",
     provider  => 'shell',
-    require   => Service['jenkins']
+    require   => Service['jenkins'],
+    notify    => Service['jenkins']
   }
 }

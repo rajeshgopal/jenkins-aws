@@ -7,6 +7,10 @@ jenkins:cli_remoting_free: false
 #jenkins::executors: 0
 #jenkins::security::security_model: 'full_control'
 
+jenkins::config_hash:
+  JENKINS_JAVA_OPTIONS:
+    value: '-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false -Dgroovy.use.classvalue=true'
+
 ## this is used by custom groovy scripts to configure jenkins
 master::settings:
   user:

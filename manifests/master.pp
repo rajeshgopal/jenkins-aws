@@ -5,7 +5,7 @@ include jenkins
 include master
 
 exec { 'waitonmaster':
-  command => 'sleep 180',
+  command => 'sleep 120',
   path    => ['/bin'],
 }
 

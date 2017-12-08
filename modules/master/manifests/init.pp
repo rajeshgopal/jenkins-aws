@@ -32,8 +32,6 @@ class master(
      ensure => installed,
    }
    
-   Package['wget'] -> Exec <||>
-   
    $settings.each |$key, $item| {
 
      $input = $item[data]
@@ -50,6 +48,7 @@ class master(
        logoutput => true,
        onlyif    => "/usr/bin/wget --spider --tries 30 --retry-connrefused ${host}",
        provider  => 'shell',
+       require   => Package['wget']
      }
    }
  }

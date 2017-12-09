@@ -1,5 +1,5 @@
 ---
-jenkins::slave::masterurl: "%{::masterurl}"
+jenkins::slave::masterurl: "http://%{::masterurl}:8080/"
 jenkins::slave::executors: 20
 jenkins::slave::version: '3.6'
 jenkins::slave::ui_user: "%{::slaveuser}"

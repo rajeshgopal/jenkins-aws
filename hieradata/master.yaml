@@ -28,6 +28,19 @@ master::settings:
     script: set_slaveport
     data:
       slaveport: "%{::slaveport}"
+  credentials:
+    script: add_credentials
+    data:
+      - userid: admin
+        password: password
+        credentialid: artifactory-user
+        description: 'access credentials for artifactory'
+  artifactory:
+    script: config_artifactory
+    data:
+      credentialsid: artifactory-user
+      servername: ArtifactoryServer
+      serverurl: "%{::artifactoryserver}"
   security:
     script: set_security
     data:

@@ -43,6 +43,11 @@ master::settings:
       password: password
       servername: ArtifactoryServer
       serverurl: "%{::artifactoryserver}"
+  globaltools:
+    script: global_tool
+    data:
+      mavenpath: /opt/maven
+      mavenname: maven3
   security:
     script: set_security
     data:

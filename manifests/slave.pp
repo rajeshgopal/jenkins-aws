@@ -16,3 +16,12 @@ exec { 'maven-install-from-archive':
   cwd     => '/opt',
   onlyif  => "mkdir maven",
 }
+# tar striping directories:
+archive { "$mavenarchive":
+  ensure          => present,
+  extract         => true,
+  extract_command => 'tar -xf %s --strip-components=1',
+  extract_path    => '/opt/maven',
+  cleanup         => true,
+  creates         => '/opt/maven',
+}

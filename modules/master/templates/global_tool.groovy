@@ -14,6 +14,6 @@ import org.jenkinsci.plugins.*
     
     def inst = Jenkins.getInstance()    
     def desc = inst.getDescriptor("hudson.tasks.Maven")
-    def minst =  new hudson.tasks.Maven.MavenInstallation("<%= @input['name'] %>", "<%= @input['mavenpath'] %>");
+    def minst =  new hudson.tasks.Maven.MavenInstallation("<%= @input['mavenname'] %>", "<%= @input['mavenpath'] %>");
     desc.setInstallations(minst)
     desc.save()

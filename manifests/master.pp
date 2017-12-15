@@ -10,7 +10,7 @@ exec { 'waitonmaster':
 }
 
 exec { 'addjob':
-  command => "curl -s -XPOST 'http://jenkins/createItem?name=sample-maven-artifactory-job' --data-binary @maven-sample-job.xml -H 'Content-Type:text/xml' ",
+  command => "curl -s -XPOST 'http://localhost:8080/createItem?name=sample-maven-artifactory-job' --data-binary @maven-sample-job.xml -H 'Content-Type:text/xml' ",
   path    => ['/usr/bin', '/bin'],
   cwd     => '/opt/garage/modules/master/files',
 }

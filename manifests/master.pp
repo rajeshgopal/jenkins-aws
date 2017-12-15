@@ -9,4 +9,10 @@ exec { 'waitonmaster':
   path    => ['/bin'],
 }
 
-Class['jenkins'] -> Exec['waitonmaster'] -> Class['master']
+exec { 'addjob':
+  command => "curl -s -XPOST 'http://jenkins/createItem?name=sample-maven-artifactory-job' --data-binary @maven-sample-job.xml -H 'Content-Type:text/xml' ",
+  path    => ['/usr/bin', '/bin'],
+  cwd     => '/opt/garage/modules/master/files',
+}
+
+Class['jenkins'] -> Exec['waitonmaster'] -> Exec['addjob'] -> Class['master']

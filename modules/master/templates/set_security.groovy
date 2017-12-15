@@ -21,6 +21,11 @@ class InvalidCredentialsId extends Exception {}
 class MissingRequiredPlugin extends Exception {}
 
 def j = Jenkins.getInstance()
+
+Set<String> agentProtocolsList = ['JNLP4-connect', 'Ping']
+    if(!j.getAgentProtocols().equals(agentProtocolsList)) {
+        j.setAgentProtocols(agentProtocolsList)
+    }
 def security_model = '<%= @input['model'] %>'
     if (security_model == 'disabled') {
       j.disableSecurity()

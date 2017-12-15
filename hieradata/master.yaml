@@ -135,7 +135,7 @@ jenkins::plugin_hash:
   swarm:
     version: '3.6'
   script-security:
-    version: '1.36'
+    version: '1.39'
   ssh-credentials:
     version: '1.13'
   ssh-slaves:

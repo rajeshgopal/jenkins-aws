@@ -10,12 +10,6 @@ $list.each |$item| {
     ensure => installed,
   }
 }
-exec { 'maven-install-from-archive':
-  path    => ['/bin', '/usr/bin'],
-  command => "tar -xf $mavenarchive -C /opt/maven --strip-components=1",
-  cwd     => '/opt',
-  onlyif  => "mkdir maven",
-}
 # tar striping directories:
 archive { "$mavenarchive":
   ensure          => present,

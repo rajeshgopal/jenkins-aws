@@ -36,4 +36,4 @@ service { 'docker':
   require => Package['docker-ce']
 }
 
-Yumrepo['docker-repo'] -> Service['docker'] -> Class['jenkins::slave'] 
+Yumrepo['docker-repo'] -> Package <| |> -> Service['docker'] -> Class['jenkins::slave'] 

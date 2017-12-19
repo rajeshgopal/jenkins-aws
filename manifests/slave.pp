@@ -22,12 +22,12 @@ exec { 'maven-install-from-archive':
 yumrepo { 'docker-repo':
   enabled  => 1,
   descr    => 'Docker CE repo',
-  baseurl  => 'https://download.docker.com/linux/centos/',
+  baseurl  => 'https://download.docker.com/linux/centos/7/x86_64/stable',
   gpgcheck => 0,
 }
 exec { 'rhel-extras-repo':
   path  => ['/bin', '/usr/bin'],
-  command => 'yum -y --enablerepo=rhui-REGION-rhel-server-extras',
+  command => 'yum -y --enablerepo=rhui-REGION-rhel-server-extras' install container-selinux,
   before  => Yumrepo['docker-repo']
   }
 

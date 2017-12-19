@@ -35,6 +35,10 @@ master::settings:
         password: password
         credentialid: artifactory-user
         description: 'access credentials for artifactory'
+      - userid: rajeshgopal
+        password: Isha1983
+        credentialid: docker-hub-creds
+        description: 'Docker hub access creds'
   artifactory:
     script: config_artifactory
     data:

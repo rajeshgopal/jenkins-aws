@@ -18,3 +18,23 @@ exec { 'maven-install-from-archive':
   cwd     => '/opt',
   onlyif  => "mkdir maven && wget $mavenarchive",
 }
+
+yumrepo { 'docker-repo':
+  enabled  => 1,
+  descr    => 'Docker CE repo',
+  baseurl  => 'https://download.docker.com/linux/centos/',
+  gpgcheck => 0,
+}
+yumrepo { 'rhel-extras':
+  enabled  => 1,
+  descr    => 'Docker CE repo',
+  baseurl  => 'https://download.docker.com/linux/centos/',
+  gpgcheck => 0,
+}
+
+service { 'docker':
+  ensure => running,
+  require => Package['docker-ce']
+}
+
+Yumrepo <| |> -> Package <| |> -> Service['docker']

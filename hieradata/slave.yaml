@@ -10,6 +10,7 @@ packageslist:
   - maven
   - mysql
   - npm
+  - container-selinux
   - docker-ce
   
 piplist:

@@ -25,12 +25,11 @@ yumrepo { 'docker-repo':
   baseurl  => 'https://download.docker.com/linux/centos/',
   gpgcheck => 0,
 }
-yumrepo { 'rhel-extras':
-  enabled  => 1,
-  descr    => 'Docker CE repo',
-  baseurl  => 'https://download.docker.com/linux/centos/',
-  gpgcheck => 0,
-}
+exec { 'rhel-extras-repo':
+  path  => ['/bin', '/usr/bin'],
+  command => 'yum -y --enablerepo=rhui-REGION-rhel-server-extras',
+  before  => Yumrepo['docker-repo']
+  }
 
 service { 'docker':
   ensure => running,

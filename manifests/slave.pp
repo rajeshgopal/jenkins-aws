@@ -27,7 +27,7 @@ yumrepo { 'docker-repo':
 }
 exec { 'rhel-extras-repo':
   path  => ['/bin', '/usr/bin'],
-  command => 'yum -y --enablerepo=rhui-REGION-rhel-server-extras' install container-selinux,
+  command => 'yum -y --enablerepo=rhui-REGION-rhel-server-extras install container-selinux',
   before  => Yumrepo['docker-repo']
   }
 
@@ -36,4 +36,4 @@ service { 'docker':
   require => Package['docker-ce']
 }
 
-Yumrepo <| |> -> Package <| |> -> Service['docker']
+Yumrepo['docker-repo'] -> Service['docker'] -> Class['jenkins::slave'] 

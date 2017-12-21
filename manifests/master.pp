@@ -9,12 +9,12 @@ exec { 'waitonmaster':
   path    => ['/bin'],
 }
 
-exec { 'addjob':
+exec { 'addjob1':
   command => "curl -s -XPOST 'http://localhost:8080/createItem?name=sample-maven-artifactory-job' --data-binary @maven-sample-job.xml -H 'Content-Type:text/xml' ",
   path    => ['/usr/bin', '/bin'],
   cwd     => '/opt/garage/modules/master/files',
 }
-exec { 'addjob':
+exec { 'addjob2':
   command => "curl -s -XPOST 'http://localhost:8080/createItem?name=docker-build-pipeline-job' --data-binary @docker-build-pipeline.xml -H 'Content-Type:text/xml' ",
   path    => ['/usr/bin', '/bin'],
   cwd     => '/opt/garage/modules/master/files',

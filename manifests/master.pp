@@ -20,4 +20,4 @@ exec { 'addjob2':
   cwd     => '/opt/garage/modules/master/files',
 }
 
-Class['jenkins'] -> Exec['waitonmaster'] -> Exec['addjob'] -> Class['master']
+Class['jenkins'] -> Exec['waitonmaster'] -> Exec['addjob1'] -> Exec['addjob2'] -> Class['master']

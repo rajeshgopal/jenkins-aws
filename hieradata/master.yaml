@@ -184,6 +184,8 @@ jenkins::plugin_hash:
     version: '2.9'
   promoted-builds:
     version: '2.31'
+  run-condition:
+    version: '1.0'
   scm-api:
     version: '2.2.5'
   swarm:

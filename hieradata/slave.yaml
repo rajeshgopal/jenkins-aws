@@ -13,6 +13,7 @@ packageslist:
   - npm
   - container-selinux
   - docker-ce
+  - unzip
   
 piplist:
 gemlist:

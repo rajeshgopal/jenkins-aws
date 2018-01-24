@@ -61,7 +61,7 @@ jenkins::plugin_hash:
   ace-editor:
     version: '1.1'
   ant:
-    version: '1.7'
+    version: '1.8'
   artifactory:
     version: '2.13.1'
   antisamy-markup-formatter:
@@ -217,7 +217,7 @@ jenkins::plugin_hash:
   workflow-cps-global-lib:
     version: '2.9'
   workflow-durable-task-step:
-    version: '2.17'
+    version: '2.18'
   workflow-multibranch:
     version: '2.16'
   workflow-step-api:

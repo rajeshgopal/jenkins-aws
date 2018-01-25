@@ -29,6 +29,8 @@ if $mavenarchive =~ /(.*\/)(.*\.*)/ {
     command => "tar -xf $2 -C /opt/maven --strip-components=1",
     cwd     => '/opt',
     onlyif  => "mkdir maven && wget $mavenarchive",
+    require => Package['wget']
+  }
 }
 
 yumrepo { 'docker-repo':
